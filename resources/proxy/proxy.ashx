@@ -334,9 +334,6 @@ public class proxy : IHttpHandler {
     private bool fetchAndPassBackToClient(System.Net.WebResponse serverResponse, HttpResponse clientResponse, bool ignoreAuthenticationErrors) {
         if (serverResponse != null) {
             copyHeaders(serverResponse, clientResponse);
-            // Fix for Chrome response content type with OGC XML
-            if (serverResponse.ContentType == "application/vnd.ogc.wms_xml") clientResponse.ContentType = "text/xml";
-            else clientResponse.ContentType = serverResponse.ContentType;
             using (Stream byteStream = serverResponse.GetResponseStream()) {
                 // Text response
                 if (serverResponse.ContentType.Contains("text") ||

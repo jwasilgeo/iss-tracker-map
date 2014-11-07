@@ -146,12 +146,12 @@ define([
 			clearInterval(this.intervalID);
 		},
 		_findISS: function(centerAndZoom) {
-			// var issNowReturnObj;
+			var issNowReturnObj;
 			esriRequest({
 				url: 'http://api.open-notify.org/iss-now.json',
 				content: {
 					f: 'json',
-					// callback: issNowReturnObj
+					callback: issNowReturnObj
 				}
 			}).then(lang.hitch(this, '_findISSSuccess', centerAndZoom), lang.hitch(this, '_findISSErr'));
 		},
@@ -238,14 +238,14 @@ define([
 		_getISSPassTime: function(graphic, target) {
 			// target: 'locateButton' || 'geocoder'
 			var lngLatGeom = webMercatorUtils.webMercatorToGeographic(graphic.geometry);
-			// var issPassTimeReturnObj;
+			var issPassTimeReturnObj;
 			esriRequest({
 				url: 'http://api.open-notify.org/iss-pass.json',
 				content: {
 					f: 'json',
 					lat: lngLatGeom.y,
 					lon: lngLatGeom.x,
-					// callback: issPassTimeReturnObj
+					callback: issPassTimeReturnObj
 				}
 			}).then(lang.hitch(this, '_getISSPassTimeSuccess', target), lang.hitch(this, '_getISSPassTimeErr'));
 		},
