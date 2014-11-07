@@ -12,6 +12,7 @@ define([
 
 	'dojo/json',
 	'dojo/on',
+	'dojo/request/script',
 	'dojo/topic',
 
 	'esri/request',
@@ -34,7 +35,7 @@ define([
 	declare, lang, array,
 	_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
 	template, css,
-	JSON, on, topic,
+	JSON, on, script, topic,
 	esriRequest,
 	webMercatorUtils, Point, Circle,
 	Graphic, InfoTemplate, GraphicsLayer, FeatureLayer,
@@ -146,14 +147,9 @@ define([
 			clearInterval(this.intervalID);
 		},
 		_findISS: function(centerAndZoom) {
-			var issNowReturnObj;
-			esriRequest({
-				url: 'http://api.open-notify.org/iss-now.json',
-				content: {
-					f: 'json',
-					callback: issNowReturnObj
-				}
-			}).then(lang.hitch(this, '_findISSSuccess', centerAndZoom), lang.hitch(this, '_findISSErr'));
+			script.get('http://api.open-notify.org/iss-now.json', {
+			    jsonp: 'callback'
+			  }).then(lang.hitch(this, '_findISSSuccess', centerAndZoom), lang.hitch(this, '_findISSErr'));
 		},
 		_findISSSuccess: function(centerAndZoom, res) {
 			if (res.message === 'success') {
@@ -239,10 +235,10 @@ define([
 			// target: 'locateButton' || 'geocoder'
 			var lngLatGeom = webMercatorUtils.webMercatorToGeographic(graphic.geometry);
 			var issPassTimeReturnObj;
-			esriRequest({
-				url: 'http://api.open-notify.org/iss-pass.json',
-				content: {
-					f: 'json',
+			script.get('http://api.open-notify.org/iss-pass.json', {
+				jsonp: 'callback',
+				query: {
+					// f: 'json',
 					lat: lngLatGeom.y,
 					lon: lngLatGeom.x,
 					callback: issPassTimeReturnObj

@@ -4,8 +4,8 @@ define([
 	esriConfig
 ) {
 
-	esriConfig.defaults.io.proxyUrl = 'resources/proxy/proxy.ashx';
-	esriConfig.defaults.io.alwaysUseProxy = false;
+	// esriConfig.defaults.io.proxyUrl = 'resources/proxy/proxy.ashx';
+	// esriConfig.defaults.io.alwaysUseProxy = false;
 
 	return {
 		mapOptions: {
