@@ -1,12 +1,4 @@
-define([
-	'esri/config',
-], function(
-	esriConfig
-) {
-
-	// esriConfig.defaults.io.proxyUrl = 'resources/proxy/proxy.ashx';
-	// esriConfig.defaults.io.alwaysUseProxy = false;
-
+define([], function() {
 	return {
 		mapOptions: {
 			basemap: 'topo',
