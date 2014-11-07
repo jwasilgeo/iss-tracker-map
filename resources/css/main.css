@@ -1,0 +1,207 @@
+body, html {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	/*font-family: Calibri, Helvetica, sans-serif !important;*/
+	font-size: 14px;
+}
+
+#mapWidgetNode {
+	padding: 0;
+	overflow: hidden;
+	/* svg background:
+		http://svgeneration.com/generate/Patchwork?size=75&color1=ffffff&color2=e6e6e6&color3=f2f2f2&color4=ffffff&color5=f6f6f6&
+	*/
+	background-color: #fff;
+	background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHhtbG5zOnhsaW5rPSdodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rJyB3aWR0aD0nMTYwJyBoZWlnaHQ9JzEwMCcgdmlld0JveD0nMCAwIDgwIDUwJz4KCTxkZWZzPgoJCTxyZWN0IGlkPSdzJyBmaWxsPScjMDAwMDAwJyB3aWR0aD0nNScgaGVpZ2h0PSc1Jy8+Cgk8L2RlZnM+Cgk8ZyBpZD0nYic+Cgk8dXNlIHg9JzAnIHk9JzAnIGZpbGwtb3BhY2l0eT0nMC4wNCcgeGxpbms6aHJlZj0nI3MnIC8+Cgk8dXNlIHg9JzUnIHk9JzAnIGZpbGwtb3BhY2l0eT0nMC4wMicgeGxpbms6aHJlZj0nI3MnIC8+Cgk8dXNlIHg9JzEwJyB5PScwJyBmaWxsLW9wYWNpdHk9JzAuMDYnIHhsaW5rOmhyZWY9JyNzJyAvPgoJPHVzZSB4PScxNScgeT0nMCcgZmlsbC1vcGFjaXR5PScwLjA1JyB4bGluazpocmVmPScjcycgLz4KCTx1c2UgeD0nMjAnIHk9JzAnIGZpbGwtb3BhY2l0eT0nMC4wMicgeGxpbms6aHJlZj0nI3MnIC8+Cgk8dXNlIHg9JzI1JyB5PScwJyBmaWxsLW9wYWNpdHk9JzAuMDQnIHhsaW5rOmhyZWY9JyNzJyAvPgoJPHVzZSB4PSczMCcgeT0nMCcgZmlsbC1vcGFjaXR5PScwLjA3JyB4bGluazpocmVmPScjcycgLz4KCTx1c2UgeD0nMCcgeT0nNScgZmlsbC1vcGFjaXR5PScwLjAzJyB4bGluazpocmVmPScjcycgLz4KCTx1c2UgeD0nNScgeT0nNScgZmlsbC1vcGFjaXR5PScwLjA0JyB4bGluazpocmVmPScjcycgLz4KCTx1c2UgeD0nMTAnIHk9JzUnIGZpbGwtb3BhY2l0eT0nMC4wMicgeGxpbms6aHJlZj0nI3MnIC8+Cgk8dXNlIHg9JzE1JyB5PSc1JyBmaWxsLW9wYWNpdHk9JzAuMDYnIHhsaW5rOmhyZWY9JyNzJyAvPgoJPHVzZSB4PScyMCcgeT0nNScgZmlsbC1vcGFjaXR5PScwLjA0JyB4bGluazpocmVmPScjcycgLz4KCTx1c2UgeD0nMjUnIHk9JzUnIGZpbGwtb3BhY2l0eT0nMC4wMycgeGxpbms6aHJlZj0nI3MnIC8+Cgk8dXNlIHg9JzMwJyB5PSc1JyBmaWxsLW9wYWNpdHk9JzAuMDEnIHhsaW5rOmhyZWY9JyNzJyAvPgoJPHVzZSB4PSczNScgeT0nNScgZmlsbC1vcGFjaXR5PScwLjA0JyB4bGluazpocmVmPScjcycgLz4KCTx1c2UgeD0nMCcgeT0nMTAnIGZpbGwtb3BhY2l0eT0nMC4wMycgeGxpbms6aHJlZj0nI3MnIC8+Cgk8dXNlIHg9JzUnIHk9JzEwJyBmaWxsLW9wYWNpdHk9JzAuMDInIHhsaW5rOmhyZWY9JyNzJyAvPgoJPHVzZSB4PScxMCcgeT0nMTAnIGZpbGwtb3BhY2l0eT0nMC4wNicgeGxpbms6aHJlZj0nI3MnIC8+Cgk8dXNlIHg9JzE1JyB5PScxMCcgZmlsbC1vcGFjaXR5PScwLjAyJyB4bGluazpocmVmPScjcycgLz4KCTx1c2UgeD0nMjAnIHk9JzEwJyBmaWxsLW9wYWNpdHk9JzAuMDYnIHhsaW5rOmhyZWY9JyNzJyAvPgoJPHVzZSB4PScyNScgeT0nMTAnIGZpbGwtb3BhY2l0eT0nMC4wNCcgeGxpbms6aHJlZj0nI3MnIC8+Cgk8dXNlIHg9JzMwJyB5PScxMCcgZmlsbC1vcGFjaXR5PScwLjAzJyB4bGluazpocmVmPScjcycgLz4KCTx1c2UgeD0nMzUnIHk9JzEwJyBmaWxsLW9wYWNpdHk9JzAuMDcnIHhsaW5rOmhyZWY9JyNzJyAvPgoJPHVzZSB4PScwJyB5PScxNScgZmlsbC1vcGFjaXR5PScwLjA0JyB4bGluazpocmVmPScjcycgLz4KCTx1c2UgeD0nNScgeT0nMTUnIGZpbGwtb3BhY2l0eT0nMC4wMycgeGxpbms6aHJlZj0nI3MnIC8+Cgk8dXNlIHg9JzEwJyB5PScxNScgZmlsbC1vcGFjaXR5PScwLjA1JyB4bGluazpocmVmPScjcycgLz4KCTx1c2UgeD0nMTUnIHk9JzE1JyBmaWxsLW9wYWNpdHk9JzAuMDMnIHhsaW5rOmhyZWY9JyNzJyAvPgoJPHVzZSB4PScyNScgeT0nMTUnIGZpbGwtb3BhY2l0eT0nMC4wNicgeGxpbms6aHJlZj0nI3MnIC8+Cgk8dXNlIHg9JzMwJyB5PScxNScgZmlsbC1vcGFjaXR5PScwLjAxJyB4bGluazpocmVmPScjcycgLz4KCTx1c2UgeD0nMzUnIHk9JzE1JyBmaWxsLW9wYWNpdHk9JzAuMDMnIHhsaW5rOmhyZWY9JyNzJyAvPgoJPHVzZSB4PScwJyB5PScyMCcgZmlsbC1vcGFjaXR5PScwLjAxJyB4bGluazpocmVmPScjcycgLz4KCTx1c2UgeD0nNScgeT0nMjAnIGZpbGwtb3BhY2l0eT0nMC4wNicgeGxpbms6aHJlZj0nI3MnIC8+Cgk8dXNlIHg9JzEwJyB5PScyMCcgZmlsbC1vcGFjaXR5PScwLjAzJyB4bGluazpocmVmPScjcycgLz4KCTx1c2UgeD0nMTUnIHk9JzIwJyBmaWxsLW9wYWNpdHk9JzAuMDUnIHhsaW5rOmhyZWY9JyNzJyAvPgoJPHVzZSB4PScyMCcgeT0nMjAnIGZpbGwtb3BhY2l0eT0nMC4wMicgeGxpbms6aHJlZj0nI3MnIC8+Cgk8dXNlIHg9JzMwJyB5PScyMCcgZmlsbC1vcGFjaXR5PScwLjA1JyB4bGluazpocmVmPScjcycgLz4KCTx1c2UgeD0nMzUnIHk9JzIwJyBmaWxsLW9wYWNpdHk9JzAuMDInIHhsaW5rOmhyZWY9JyNzJyAvPgoJPC9nPgoJPHVzZSB4PSctNDAnIHk9JzI1JyB0cmFuc2Zvcm09J21hdHJpeCgtMSAwIDAgMSAwIDApJyB4bGluazpocmVmPScjYicgLz4KCTx1c2UgeD0nLTgwJyB5PSctMzUnIHRyYW5zZm9ybT0nbWF0cml4KC0xIDAgMCAtMSAwIDApJyB4bGluazpocmVmPScjYicgLz4KCTx1c2UgeD0nNDAnIHk9Jy02MCcgdHJhbnNmb3JtPSdtYXRyaXgoMSAwIDAgLTEgMCAwKScgeGxpbms6aHJlZj0nI2InIC8+Cgk8dXNlIHg9JzQwJyB5PSctMTAnIHRyYW5zZm9ybT0nbWF0cml4KDEgMCAwIC0xIDAgMCknIHhsaW5rOmhyZWY9JyNiJyAvPgo8L3N2Zz4=');
+	/*background: url("../images/noisy_grid_dark.png") #fff;*/
+	height: 100%;
+}
+
+/*Esri map*/
+.map {
+	height: 100%;
+}
+
+/*main title*/
+.appTitleText {
+	margin: 2px 20px 0 20px;
+	font-weight: bold;
+	font-size: 19px;
+	display: inline-block;
+}
+
+/*Esri locate button*/
+.locateButton {
+	position: absolute;
+	bottom: 115px;
+	right: 20px;
+	z-index: 2;
+}
+
+/*Esri geocoder*/
+.geocoder {
+	display: block;
+	position: absolute;
+	top: 20px;
+	right: 65px;
+	z-index: 2;
+}
+
+
+/*button bar for iss tracking and d3 globe*/
+.issButtonBar {
+	margin: 0 20px;
+	display: inline-block;
+}
+
+/* ISS tracker buttons*/
+.issTracker {
+	display: inline-block;
+}
+
+/*Globe widget button*/
+.globe {
+	display: inline-block;
+}
+
+/*general helpers*/
+.largerButton {
+	font-size: 17px;
+}
+.largerButtonIcon {
+	font-size: 28px;
+	position: relative;
+	bottom: 1px;
+}
+.off {
+	display: none;
+}
+.boxShadow {
+	-webkit-box-shadow: 0 2px 8px 0 rgba(50, 50, 50, 0.4);
+	-moz-box-shadow: 0 2px 8px 0 rgba(50, 50, 50, 0.4);
+	box-shadow: 0 2px 8px 0 rgba(50, 50, 50, 0.4);
+}
+
+/*button in Esri map-overlay style*/
+/*outer div styling*/
+/*.overlayButton {
+	padding: 2px;
+	width: 30px;
+	height: 30px;
+	background-color: #666;
+	background-color: rgba(102,102,102,0.80);
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: pointer;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 2px 8px 0 rgba(50, 50, 50, 0.4);
+	-moz-box-shadow: 0 2px 8px 0 rgba(50, 50, 50, 0.4);
+	box-shadow: 0 2px 8px 0 rgba(50, 50, 50, 0.4);
+}
+.overlayButton:hover {
+	background-color: #333;
+	background-color: rgba(102,102,102,0.90);
+}
+.overlayButton:active {
+	background-color: #ccc;
+	background-color: rgba(102,102,102,0.60);
+}*/
+/*inner icon content modifications*/
+/*.centerIconButton {
+	color: white;
+	font-size: 26px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}*/
+
+/* esri map overlay button overrides */
+.esriSimpleSliderBR {
+	border-radius: 4px;
+	border: none;
+	-webkit-box-shadow: 0 2px 8px 0 rgba(50, 50, 50, 0.4);
+	-moz-box-shadow: 0 2px 8px 0 rgba(50, 50, 50, 0.4);
+	box-shadow: 0 2px 8px 0 rgba(50, 50, 50, 0.4);
+}
+.locateButton .zoomLocateButton {
+	cursor: pointer;
+	padding: 0;
+	width: 30px;
+	height: 30px;
+	border-radius: 4px;
+	background-image: url('../images/locate.png');
+	background-color: white;
+	-webkit-box-shadow: 0 2px 8px 0 rgba(50, 50, 50, 0.4);
+	-moz-box-shadow: 0 2px 8px 0 rgba(50, 50, 50, 0.4);
+	box-shadow: 0 2px 8px 0 rgba(50, 50, 50, 0.4);
+}
+.locateButton .zoomLocateButton:active {
+background-color: #ddd;
+}
+.locateButton .zoomLocateButton:hover {
+	background-color: #eee;
+}
+.simpleGeocoder .esriGeocoder {
+	display: block;
+	width: 100%;
+	margin: 0;
+	/*border: 1px solid #57585A;*/
+	border: none;
+	background: #fff;
+	border-radius: 2px;
+	-webkit-box-shadow: 0 2px 8px 0 rgba(50, 50, 50, 0.4);
+	-moz-box-shadow: 0 2px 8px 0 rgba(50, 50, 50, 0.4);
+	box-shadow: 0 2px 8px 0 rgba(50, 50, 50, 0.4);
+}
+.simpleGeocoder .esriGeocoder input {
+	box-shadow: none;
+}
+.simpleGeocoder .esriGeocoderResults {
+	border: none;
+	border-radius: 0 0 2px 2px;
+	-webkit-box-shadow: 0 2px 8px 0 rgba(50, 50, 50, 0.4);
+	-moz-box-shadow: 0 2px 8px 0 rgba(50, 50, 50, 0.4);
+	box-shadow: 0 2px 8px 0 rgba(50, 50, 50, 0.4);
+}
+
+/* esri popup window overrides */
+/*.esriPopup .sizer {
+	width: 375px;
+}*/
+.esriPopup .esriPopupWrapper {
+	background-color: #FFFFFF;
+}
+.esriPopup .titlePane {
+	background-color: rgb(51, 102, 153);
+}
+
+/* dbootstrap overrides*/
+.dbootstrap :focus {
+	outline: none !important;
+}
+/*to play nice with Picnic label toggle button*/
+label.toggle { 
+	vertical-align: 0 !important;
+}
+nav {
+	background: rgba(255, 255, 255, 0.75);
+}
+
+/*media queries*/
+@media (max-width: 500px) and (orientation: portrait) {
+	.appTitleText {
+		font-size: 16px;
+	}
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+	.appTitleText {
+		font-size: 16px;
+	}
+}
