@@ -1,0 +1,97 @@
+/*dialog close button*/
+.closeButton {
+	font-size: 25px;
+	position: absolute;
+	right: 5px;
+	margin: 5px;
+	cursor: pointer;
+}
+.closeButton.blackIcon {
+	color: black;
+}
+.closeButton.whiteIcon {
+	color: white;
+}
+
+/*theme toggle button*/
+.themeTogglerButton {
+	color: white;
+	position: absolute;
+	bottom: 5px;
+	left: 6px;
+	font-size: 25px;
+	margin: 5px;
+	cursor: pointer;
+}
+.themeTogglerButton.lightTheme {
+	color: black;
+}
+.themeTogglerButton.darkTheme {
+	color: white;
+}
+
+/*default svg settings*/
+.svgNode {
+	cursor: move;
+	border-radius: 5px;
+}
+.graticule {
+	fill: none;
+	stroke: #BFBFBF;
+}
+.orbital {
+	fill: none;
+	stroke: rgb(255, 0, 0);
+	stroke-width: 2.25px;
+	stroke-linecap: round;
+}
+.spaceStation {
+	fill: rgb(255, 0, 0); 
+	stroke: rgb(255, 0, 0);
+	stroke-width: 2.25px;
+}
+
+/*light-themed svg globe*/
+.svgNode.lightTheme {
+	background-color: white;
+}
+.graticule.lightTheme {
+	stroke-width: 0.5px;
+}
+.land.lightTheme {
+	fill: #6C6C6C;
+}
+.atmosphere.lightTheme {
+	fill: none;
+	stroke: rgba(81, 210, 255, 1);
+	stroke-width: 1px;
+}
+
+/*dark-themed svg globe*/
+.svgNode.darkTheme {
+	background-color: black;
+}
+.graticule.darkTheme {
+	fill: none;
+	stroke: #BFBFBF;
+	stroke-width: 0.1px;
+}
+.land.darkTheme {
+	fill: #DDD;
+}
+.atmosphere.darkTheme {
+	fill: rgb(81, 210, 255);
+	fill-opacity: 0.25;
+	stroke: rgb(81, 210, 255);
+	stroke-opacity: 0.3;
+	stroke-width: 4.5px;
+}
+
+/* dojox Dialog overrides*/
+div.dojoxDialogNoTitle {
+	padding-top: 3px;
+}
+
+.dojoxDialogNoTitle .dojoxDialogCloseIcon {
+	display: none;
+}

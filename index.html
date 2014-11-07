@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<title>ISS Tracker Map</title>
+		
+		<link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
+		<link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
+		
+		<link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.11/esri/css/esri.css">
+		<link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.11/dojox/widget/Dialog/Dialog.css">
+		<link rel="stylesheet" type="text/css" href="resources/css/picnic.v2.2.min.css">
+		<link rel="stylesheet" type="text/css" href="resources/css/main.css">
+	</head>
+	<body class="dbootstrap">
+		<div id="mapWidgetNode" class="mapWidgetNode">
+		</div>
+		<script type="text/javascript">
+		var dojoConfig = {
+			async: true,
+			packages: [{
+				name: 'viewer', // viewer Controller, custom widgets, etc.
+				location: location.pathname.replace(/[^\/]+$/, '') + 'resources/js/viewer'
+			}, {
+				name: 'config',
+				location: location.pathname.replace(/[^\/]+$/, '') + 'resources/js/config'
+			}, {
+				name: 'dbootstrap',
+				location: location.pathname.replace(/[^\/]+$/, '') + 'resources/js/libs/dbootstrap'
+			}, {
+				name: 'd3',
+				location: location.pathname.replace(/[^\/]+$/, '') + 'resources/js/libs/d3'
+			}]
+		};
+		</script>
+		<script type="text/javascript" src="//js.arcgis.com/3.11compact/"></script>
+		<!-- <script type="text/javascript" src="//js.arcgis.com/3.11/"></script> -->
+		<script type="text/javascript">
+			var app; // dev only
+			require([
+				'dbootstrap',
+				'viewer/Controller',
+				'config/config',
+				'dojo/dom'
+				], function(
+					dbootstrap, Controller, config, dom
+				) {
+				var mapWidgetNode = dom.byId('mapWidgetNode');
+				Controller.startup(config, mapWidgetNode);
+				app = Controller; // dev only
+			});
+		</script>
+	</body>
+</html>
