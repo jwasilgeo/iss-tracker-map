@@ -1,8 +1,8 @@
-ISS-tracker-map
+iss-tracker-map
 ===============
 
 Use this web map to find out where the International Space Station (ISS) is and view nearby astronaut photography.
-[Take me there](http://jwasil.github.io/iss-tracker-map/)
+[Ok, let me see it already](http://jwasil.github.io/iss-tracker-map/).
 
 ### Features:
 * Track the space station's current location
@@ -17,3 +17,6 @@ Use this web map to find out where the International Space Station (ISS) is and 
 * [Esri JSAPI](https://developers.arcgis.com/javascript/) and of course [Dojo](http://dojotoolkit.org/)
 * [D3](http://d3js.org/)
 * [Picnic CSS](http://picnicss.com/)
+
+### License:
+MIT. More info [here](LICENSE).
