@@ -14,7 +14,7 @@ Use this web map to find out where the International Space Station (ISS) is and 
 * Find out when the ISS will be overhead
 
 ### Shout-outs:
-* [Open Notify](http://open-notify.org/)
+* The primary space data that really drives this site wouldn't be possible without [Open Notify](http://open-notify.org/) and [natronics](https://github.com/natronics)
 * [Esri JSAPI](https://developers.arcgis.com/javascript/) and of course [Dojo](http://dojotoolkit.org/)
 * [D3](http://d3js.org/)
 * [Picnic CSS](http://picnicss.com/)
