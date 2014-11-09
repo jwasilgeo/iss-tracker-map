@@ -67,6 +67,19 @@ body, html {
 	display: inline-block;
 }
 
+/*credits*/
+.creds {
+	position: absolute;
+	bottom: 0;
+	right: 75px;
+	z-index: 2;
+	border-radius: 2px;
+	background-color: lightgrey;
+	background-color: rgba(211, 211, 211, 0.5);
+	padding: 0 5px;
+	font-size: 12px;
+}
+
 /*general helpers*/
 .largerButton {
 	font-size: 17px;
