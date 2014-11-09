@@ -77,7 +77,12 @@ body, html {
 	background-color: lightgrey;
 	background-color: rgba(211, 211, 211, 0.5);
 	padding: 0 5px;
-	font-size: 12px;
+	font-size: 13px;
+}
+
+.creds .gitLinkIcon {
+	margin-left: 7px;
+	font-size: 18px;
 }
 
 /*general helpers*/

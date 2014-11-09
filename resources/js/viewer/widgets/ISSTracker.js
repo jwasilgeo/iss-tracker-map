@@ -10,16 +10,13 @@ define([
 	'dojo/text!./ISSTracker/templates/ISSTracker.html',
 	'xstyle/css!./ISSTracker/css/ISSTracker.css',
 
-	'dojo/json',
 	'dojo/on',
 	'dojo/request/script',
 	'dojo/topic',
 
-	'esri/request',
-
 	'esri/geometry/webMercatorUtils',
-	'esri/geometry/Point',
 	'esri/geometry/Circle',
+	'esri/geometry/Point',
 
 	'esri/graphic',
 	'esri/InfoTemplate',
@@ -30,16 +27,19 @@ define([
 	'esri/symbols/PictureMarkerSymbol',
 	'esri/symbols/SimpleMarkerSymbol',
 
-	'put-selector',
+	'esri/tasks/query',
+	'esri/tasks/QueryTask',
+
+	'put-selector'
 ], function(
 	declare, lang, array,
 	_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
 	template, css,
-	JSON, on, script, topic,
-	esriRequest,
-	webMercatorUtils, Point, Circle,
+	on, script, topic,
+	webMercatorUtils, Circle, Point,
 	Graphic, InfoTemplate, GraphicsLayer, FeatureLayer,
 	SimpleRenderer, PictureMarkerSymbol, SimpleMarkerSymbol,
+	Query, QueryTask,
 	put
 ) {
 	return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
@@ -99,7 +99,6 @@ define([
 			});
 			put(a, 'img', {
 				width: '250',
-				// width: '345',
 				src: 'http://eol.jsc.nasa.gov/sseop/images/ESC/small/${mission}/${missionRollFrame}.JPG',
 			});
 			var photoCredits = put(content, 'div', {
@@ -190,29 +189,18 @@ define([
 			var circleGeom = new Circle(mapPoint, {
 				geodesic: true,
 				radius: 50000, // meters
-				numberOfPoints: 120
 			});
 
-			var circleGeomJson = circleGeom.toJson();
-			esriRequest({
-				url: this.astroPhotosLayer.url + '/query',
-				content: {
-					f: 'json',
-					returnIdsOnly: true,
-					geometryType: 'esriGeometryPolygon',
-					geometry: JSON.stringify(circleGeomJson),
-					outSR: 102100,
-					where: '1=1'
-				},
-				handleAs: 'json',
-				callbackParamName: 'callback'
-			}).then(lang.hitch(this, '_findNearbyPhotosComplete'), lang.hitch(this, '_findNearbyPhotosErr'));
+			var query = new Query();
+			var queryTask = new QueryTask(this.astroPhotosLayer.url);
+			query.geometry = circleGeom;
+			queryTask.executeForIds(query, lang.hitch(this, '_findNearbyPhotosComplete'), lang.hitch(this, '_findNearbyPhotosErr'));
 		},
 		_findNearbyPhotosComplete: function(res) {
 			if (this.issWakeCounter === this.issWakeLength) {
 				this.issWakeCounter = 0;
 			}
-			this.wakeObject[this.issWakeCounter] = (res.objectIds === null) ? [-1] : res.objectIds;
+			this.wakeObject[this.issWakeCounter] = (res.length === 0) ? [-1] : res;
 			var whereClauseIds = [];
 			for (var i in this.wakeObject) {
 				if (this.wakeObject.hasOwnProperty(i)) {
@@ -238,7 +226,6 @@ define([
 			script.get('http://api.open-notify.org/iss-pass.json', {
 				jsonp: 'callback',
 				query: {
-					// f: 'json',
 					lat: lngLatGeom.y,
 					lon: lngLatGeom.x,
 					callback: issPassTimeReturnObj
