@@ -11,6 +11,7 @@ define([
 	'xstyle/css!./ISSTracker/css/ISSTracker.css',
 
 	'dojo/on',
+	'dojo/request',
 	'dojo/request/script',
 	'dojo/topic',
 
@@ -27,19 +28,15 @@ define([
 	'esri/symbols/PictureMarkerSymbol',
 	'esri/symbols/SimpleMarkerSymbol',
 
-	'esri/tasks/query',
-	'esri/tasks/QueryTask',
-
 	'put-selector'
 ], function(
 	declare, lang, array,
 	_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
 	template, css,
-	on, script, topic,
+	on, dojoRequest, script, topic,
 	webMercatorUtils, Circle, Point,
 	Graphic, InfoTemplate, GraphicsLayer, FeatureLayer,
 	SimpleRenderer, PictureMarkerSymbol, SimpleMarkerSymbol,
-	Query, QueryTask,
 	put
 ) {
 	return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
@@ -147,8 +144,8 @@ define([
 		},
 		_findISS: function(centerAndZoom) {
 			script.get('http://api.open-notify.org/iss-now.json', {
-			    jsonp: 'callback'
-			  }).then(lang.hitch(this, '_findISSSuccess', centerAndZoom), lang.hitch(this, '_findISSErr'));
+				jsonp: 'callback'
+			}).then(lang.hitch(this, '_findISSSuccess', centerAndZoom), lang.hitch(this, '_findISSErr'));
 		},
 		_findISSSuccess: function(centerAndZoom, res) {
 			if (res.message === 'success') {
@@ -191,16 +188,30 @@ define([
 				radius: 50000, // meters
 			});
 
-			var query = new Query();
-			var queryTask = new QueryTask(this.astroPhotosLayer.url);
-			query.geometry = circleGeom;
-			queryTask.executeForIds(query, lang.hitch(this, '_findNearbyPhotosComplete'), lang.hitch(this, '_findNearbyPhotosErr'));
+			var circleGeomJson = circleGeom.toJson();
+
+			var request = dojoRequest(this.astroPhotosLayer.url + '/query', {
+				data: {
+					f: 'json',
+					returnIdsOnly: true,
+					geometryType: 'esriGeometryPolygon',
+					geometry: JSON.stringify(circleGeomJson),
+					outSR: 102100
+				},
+				handleAs: 'json',
+				headers: {
+					'X-Requested-With': null
+				},
+				method: 'POST',
+				preventCache: true
+			});
+			request.then(lang.hitch(this, '_findNearbyPhotosComplete'), lang.hitch(this, '_findNearbyPhotosErr'));
 		},
 		_findNearbyPhotosComplete: function(res) {
 			if (this.issWakeCounter === this.issWakeLength) {
 				this.issWakeCounter = 0;
 			}
-			this.wakeObject[this.issWakeCounter] = (res.length === 0) ? [-1] : res;
+			this.wakeObject[this.issWakeCounter] = (res.objectIds === null) ? [-1] : res.objectIds;
 			var whereClauseIds = [];
 			for (var i in this.wakeObject) {
 				if (this.wakeObject.hasOwnProperty(i)) {
