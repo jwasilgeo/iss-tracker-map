@@ -90,13 +90,13 @@ define([
 		_createAstronautPhotographyLayer: function() {
 			var content = put('div');
 			var a = put(content, 'a', {
-				href: 'http://eol.jsc.nasa.gov/scripts/sseop/photo.pl?mission=${mission}&roll=${roll}&frame=${frame}',
+				href: 'http://eol.jsc.nasa.gov/SearchPhotos/photo.pl?mission=${mission}&roll=${roll}&frame=${frame}',
 				target: '_blank',
 				innerHTML: '<div><i class="icon-camera" style="font-size:20px;margin:0 10px 10px 0;"></i>View ${missionRollFrame}</div>'
 			});
 			put(a, 'img', {
 				width: '250',
-				src: 'http://eol.jsc.nasa.gov/sseop/images/ESC/small/${mission}/${missionRollFrame}.JPG',
+				src: 'http://eol.jsc.nasa.gov/DatabaseImages/ESC/small/${mission}/${missionRollFrame}.JPG',
 			});
 			var photoCredits = put(content, 'div', {
 				innerHTML: 'Earth Science and Remote Sensing Unit, NASA-Johnson Space Center. "The Gateway to Astronaut Photography of Earth."'
