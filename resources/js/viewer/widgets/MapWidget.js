@@ -1,29 +1,29 @@
 define([
+	'./Globe',
+	'./ISSTracker',
+
+	'dijit/_TemplatedMixin',
+	'dijit/_WidgetBase',
+
 	'dojo/_base/declare',
 	'dojo/_base/lang',
+	'dojo/date/locale',
+	'dojo/text!./MapWidget/templates/MapWidget.html',
 	'dojo/topic',
 
-	'dijit/_WidgetBase',
-	'dijit/_TemplatedMixin',
-
-	'dojo/text!./MapWidget/templates/MapWidget.html',
-
-	'./ISSTracker',
-	'./Globe',
-
+	// 'esri/dijit/Geocoder',
 	'esri/dijit/LocateButton',
-	'esri/dijit/Geocoder',
-	'esri/InfoTemplate',
 	'esri/graphic',
+	'esri/InfoTemplate',
 	'esri/map',
 
 	'put-selector'
 ], function(
-	declare, lang, topic,
-	_WidgetBase, _TemplatedMixin,
-	template,
-	ISSTracker, Globe,
-	LocateButton, Geocoder, InfoTemplate, Graphic, Map,
+	Globe, ISSTracker,
+	_TemplatedMixin, _WidgetBase,
+	declare, lang, locale, template, topic,
+	/*Geocoder,*/
+	LocateButton, Graphic, InfoTemplate, Map,
 	put
 ) {
 	return declare([_WidgetBase, _TemplatedMixin], {
@@ -33,7 +33,7 @@ define([
 			this._initMap();
 		},
 		_initMap: function() {
-			this.map = Map(this.mapNode, this.config.mapOptions);
+			this.map = new Map(this.mapNode, this.config.mapOptions);
 			this.map.on('load', lang.hitch(this, '_initWidgets'));
 		},
 		_initWidgets: function() {
@@ -108,22 +108,26 @@ define([
 			var contentDiv = put('div');
 			var pass1 = passTimesResponse.response[0];
 			var location = {
-				latitude: passTimesResponse.request.latitude,
-				longitude: passTimesResponse.request.longitude
+				latitude: passTimesResponse.request.latitude.toFixed(4),
+				longitude: passTimesResponse.request.longitude.toFixed(4)
 			};
 			if (pass1.hasOwnProperty('risetime')) {
+
 				var pass1Date = new Date(pass1.risetime * 1000);
-				var formattedDate = this._getFormatDateAndTime(pass1Date);
+				var formattedDate = locale.format(pass1Date, {
+					formatLength: 'long'
+				});
+
 				var mins = Math.floor(pass1.duration / 60);
 				var secs = pass1.duration % 60;
-				var minSecFormat = mins + ' minutes and ' + secs + ' seconds';
+				var formattedDuration = mins + ' minutes and ' + secs + ' seconds';
 
 				put(contentDiv, 'div', {
-					innerHTML: 'The ISS will "rise" in the sky on: ' + formattedDate + ', lasting and for about ' + minSecFormat + '.'
+					innerHTML: 'The ISS will "rise" in the sky on: ' + formattedDate + ', lasting for about ' + formattedDuration + '.'
 				});
 			} else {
 				put(contentDiv, 'div', {
-					innerHTML: 'Sorry, something didn\'t quite work out.'
+					innerHTML: 'Sorry, we were unable to find the next ISS flyover date for this location.'
 				});
 			}
 
@@ -143,19 +147,6 @@ define([
 			} else if (target === 'geocoder') {
 				this.geocodeSelectInfoTemplate.setContent(contentDiv);
 			}
-		},
-
-		_getDateTimeObj: function(date) {
-			// returns an object of arrays to help with date and time formatting
-			var dateTimeObj = {};
-			dateTimeObj.YMD = [String(date.getFullYear()), ('0' + (date.getMonth() + 1)).slice(-2), ('0' + date.getDate()).slice(-2)];
-			dateTimeObj.HMS = [('0' + date.getHours()).slice(-2), ('0' + date.getMinutes()).slice(-2), ('0' + date.getSeconds()).slice(-2)];
-			return dateTimeObj;
-		},
-		_getFormatDateAndTime: function(date) {
-			// 2014/03/14 17:03
-			var dateTimeObj = this._getDateTimeObj(date);
-			return dateTimeObj.YMD.join('/') + ' ' + dateTimeObj.HMS[0] + ':' + dateTimeObj.HMS[1];
-		},
+		}
 	});
 });

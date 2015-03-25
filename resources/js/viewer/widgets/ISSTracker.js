@@ -1,43 +1,37 @@
 define([
-	'dojo/_base/declare',
-	'dojo/_base/lang',
-	'dojo/_base/array',
-
-	'dijit/_WidgetBase',
 	'dijit/_TemplatedMixin',
+	'dijit/_WidgetBase',
 	'dijit/_WidgetsInTemplateMixin',
 
-	'dojo/text!./ISSTracker/templates/ISSTracker.html',
-	'xstyle/css!./ISSTracker/css/ISSTracker.css',
-
+	'dojo/_base/array',
+	'dojo/_base/declare',
+	'dojo/_base/lang',
 	'dojo/on',
 	'dojo/request',
 	'dojo/request/script',
+	'dojo/text!./ISSTracker/templates/ISSTracker.html',
 	'dojo/topic',
 
-	'esri/geometry/webMercatorUtils',
 	'esri/geometry/Circle',
 	'esri/geometry/Point',
-
+	'esri/geometry/webMercatorUtils',
 	'esri/graphic',
 	'esri/InfoTemplate',
-	'esri/layers/GraphicsLayer',
 	'esri/layers/FeatureLayer',
-
+	'esri/layers/GraphicsLayer',
 	'esri/renderers/SimpleRenderer',
 	'esri/symbols/PictureMarkerSymbol',
 	'esri/symbols/SimpleMarkerSymbol',
 
-	'put-selector'
+	'put-selector',
+
+	'xstyle/css!./ISSTracker/css/ISSTracker.css'
 ], function(
-	declare, lang, array,
-	_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
-	template, css,
-	on, dojoRequest, script, topic,
-	webMercatorUtils, Circle, Point,
-	Graphic, InfoTemplate, GraphicsLayer, FeatureLayer,
-	SimpleRenderer, PictureMarkerSymbol, SimpleMarkerSymbol,
-	put
+	_TemplatedMixin, _WidgetBase, _WidgetsInTemplateMixin,
+	array, declare, lang, on, dojoRequest, script, template, topic,
+	Circle, Point, webMercatorUtils, Graphic, InfoTemplate, FeatureLayer, GraphicsLayer, SimpleRenderer, PictureMarkerSymbol, SimpleMarkerSymbol,
+	put,
+	css
 ) {
 	return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 		templateString: template,

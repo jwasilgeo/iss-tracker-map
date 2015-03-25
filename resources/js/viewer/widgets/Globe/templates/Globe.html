@@ -1,10 +1,12 @@
 <div>
 	<button class="largerButton" data-dojo-attach-event="onclick:openContainer" title="See it on a globe">
-		<i class="icon-globe largerButtonIcon"></i>
+		<i class="icon-globe"></i> 3-D
 	</button>
 	<div class="globeDialog" data-dojo-type="dojox/widget/Dialog" sizeToViewport="true" data-dojo-attach-point="globeDialog">
-		<i class="icon-remove closeButton whiteIcon" data-dojo-attach-point="closeXButton" data-dojo-attach-event="onclick:closeContainer" title="Close"></i>
-			<div data-dojo-attach-point="svgTargetNode" class="darkTheme">
+		<button class="dull closeButton largerButton" data-dojo-attach-event="onclick:closeContainer" title="Close">
+			<i class="icon-remove"></i>
+		</button>
+		<div data-dojo-attach-point="svgTargetNode" class="darkTheme">
 		</div>
 	</div>
 </div>

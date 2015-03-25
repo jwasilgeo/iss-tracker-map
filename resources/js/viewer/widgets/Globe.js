@@ -1,39 +1,37 @@
 define([
-	'dojo/_base/declare',
-	'dojo/_base/array',
-	'dojo/_base/lang',
-
-	'dijit/_WidgetBase',
-	'dijit/_TemplatedMixin',
-	'dijit/_WidgetsInTemplateMixin',
-
-	'dojox/widget/Dialog',
+	'./Globe/gis/world_110m',
 
 	'd3/d3.min',
 	'd3/topojson.v1.min',
 
-	'dojo/text!./Globe/templates/Globe.html',
-	'xstyle/css!./Globe/css/Globe.css',
+	'dijit/_TemplatedMixin',
+	'dijit/_WidgetBase',
+	'dijit/_WidgetsInTemplateMixin',
 
-	'./Globe/gis/world_110m', // topojson gis world boundaries as js
-
+	'dojo/_base/array',
+	'dojo/_base/declare',
+	'dojo/_base/lang',
 	'dojo/aspect',
 	'dojo/dom-class',
 	'dojo/dom-geometry',
 	'dojo/dom-style',
 	'dojo/request',
+	'dojo/text!./Globe/templates/Globe.html',
 	'dojo/topic',
 
-	'put-selector'
+	'dojox/widget/Dialog',
+
+	'put-selector',
+
+	'xstyle/css!./Globe/css/Globe.css'
 ], function(
-	declare, array, lang,
-	_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
-	Dialog,
-	d3, topoJson,
-	template, css,
 	world_110m,
-	aspect, domClass, domGeom, domStyle, dojoRequest, topic,
-	put
+	d3, topoJson,
+	_TemplatedMixin, _WidgetBase, _WidgetsInTemplateMixin,
+	array, declare, lang, aspect, domClass, domGeom, domStyle, dojoRequest, template, topic,
+	Dialog,
+	put,
+	css
 ) {
 	return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 		templateString: template,
@@ -156,13 +154,11 @@ define([
 			this._issPointSelection = issPointSelection;
 
 			// load in countries topojson data
-			// d3.json('./resources/js/viewer/widgets/Globe/gis/world-110m.json', function(error, world) {
 			// insert this layer before/under the ISS orbital path layer
 			svg.insert('path', '.atmosphere')
 				.datum(topoJson.feature(world_110m, world_110m.objects.countries))
 				.attr('class', 'land darkTheme')
 				.attr('d', geoPath);
-			// });
 		},
 		_updateGlobeGeometries: function(lngLat) {
 			this._geoJsonLine.coordinates.push(lngLat);
@@ -179,26 +175,24 @@ define([
 			issPointSelection.attr('d', geoPath);
 		},
 		_initThemeToggler: function() {
-			this.themeTogglerButton = put(this.svgTargetNode, 'i.icon-adjust.themeTogglerButton.darkTheme', {
+			this.themeTogglerButton = put(this.svgTargetNode, 'button.dull.themeTogglerButton.largerButton.icon-adjust', {
 				onclick: lang.hitch(this, 'toggleTheme'),
 				title: 'Toggle color theme'
 			});
 		},
 		toggleTheme: function() {
-			if (domClass.contains(this.svgTargetNode, 'darkTheme') && domClass.contains(this.closeXButton, 'whiteIcon')) {
+			if (domClass.contains(this.svgTargetNode, 'darkTheme')) {
 				this._svg.attr('class', 'svgNode lightTheme');
 				d3.select('.land').attr('class', 'land lightTheme');
 				d3.select('.graticule').attr('class', 'graticule lightTheme');
 				d3.select('.atmosphere').attr('class', 'atmosphere lightTheme');
-				put(this.themeTogglerButton, '.lightTheme!darkTheme');
-				put(this.closeXButton, '.blackIcon!whiteIcon');
+				put(this.svgTargetNode, '.lightTheme!darkTheme');
 			} else {
 				this._svg.attr('class', 'svgNode darkTheme');
 				d3.select('.land').attr('class', 'land darkTheme');
 				d3.select('.graticule').attr('class', 'graticule darkTheme');
 				d3.select('.atmosphere').attr('class', 'atmosphere darkTheme');
-				put(this.themeTogglerButton, '.darkTheme!lightTheme');
-				put(this.closeXButton, '.whiteIcon!blackIcon');
+				put(this.svgTargetNode, '.darkTheme!lightTheme');
 			}
 		},
 		openContainer: function() {
@@ -210,6 +204,7 @@ define([
 				this._svg.attr('width', dimensions.w);
 				this._svg.attr('height', dimensions.h);
 				this._projection.translate([dimensions.w / 2, dimensions.h / 2]);
+				this._projection.rotate([-this._geoJsonPoint.coordinates[0], -this._geoJsonPoint.coordinates[1]]);
 				this._svg.selectAll('path').attr('d', this._geoPath);
 				domStyle.set(this.globeDialog.containerNode, 'overflow', 'hidden');
 			}));

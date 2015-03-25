@@ -1,8 +1,8 @@
 define([
-	'dojo/_base/declare',
-	'./widgets/MapWidget'
+	'./widgets/MapWidget',
+	'dojo/_base/declare'
 ], function(
-	declare, MapWidget
+	MapWidget, declare
 ) {
 	return {
 		startup: function(config, mapWidgetNode) {
