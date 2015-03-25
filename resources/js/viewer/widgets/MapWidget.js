@@ -101,7 +101,7 @@ define([
 		_cleanupInfoWindow: function() {
 			if (this.map.infoWindow.isShowing) {
 				this.map.infoWindow.hide();
-				this.map.infowWindow.clearFeatures();
+				this.map.infoWindow.clearFeatures();
 			}
 		},
 		_updateLocationPassTimes: function(passTimesResponse, target) {
@@ -123,7 +123,7 @@ define([
 				var formattedDuration = mins + ' minutes and ' + secs + ' seconds';
 
 				put(contentDiv, 'div', {
-					innerHTML: 'The ISS will "rise" in the sky on: ' + formattedDate + ', lasting for about ' + formattedDuration + '.'
+					innerHTML: 'The ISS will "rise" in the sky on ' + formattedDate + ', lasting for about ' + formattedDuration + '.'
 				});
 			} else {
 				put(contentDiv, 'div', {
