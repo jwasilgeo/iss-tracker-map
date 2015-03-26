@@ -174,6 +174,8 @@ define([
 			issPointSelection.datum(this._geoJsonPoint);
 			issPointSelection.attr('d', geoPath);
 		},
+
+
 		_initThemeToggler: function() {
 			this.themeTogglerButton = put(this.svgTargetNode, 'button.dull.themeTogglerButton.largerButton.icon-adjust', {
 				onclick: lang.hitch(this, 'toggleTheme'),
@@ -195,9 +197,10 @@ define([
 				put(this.svgTargetNode, '.darkTheme!lightTheme');
 			}
 		},
+
+
 		openContainer: function() {
 			this.globeDialog.show();
-
 			// resize the d3 globe and components after the dojox widget is sized and shown
 			aspect.after(this.globeDialog, '_showContent', lang.hitch(this, function() {
 				var dimensions = domGeom.getContentBox(this.globeDialog.domNode);
@@ -208,7 +211,6 @@ define([
 				this._svg.selectAll('path').attr('d', this._geoPath);
 				domStyle.set(this.globeDialog.containerNode, 'overflow', 'hidden');
 			}));
-
 		},
 		closeContainer: function() {
 			this.globeDialog.hide();

@@ -235,16 +235,14 @@ define([
 					lon: lngLatGeom.x,
 					callback: issPassTimeReturnObj
 				}
-			}).then(lang.hitch(this, '_getISSPassTimeSuccess', target), lang.hitch(this, '_getISSPassTimeErr'));
+			}).then(lang.hitch(this, '_getISSPassTimeSuccess', target), lang.hitch(this, '_getISSPassTimeErr', target));
 		},
-
 		_getISSPassTimeSuccess: function(target, res) {
-			if (res.message === 'success') {
-				topic.publish('iss/passTimes', res, target);
-			}
+			topic.publish('iss/passTimes', res, target);
 		},
-		_getISSPassTimeErr: function(err) {
+		_getISSPassTimeErr: function(target, err) {
 			console.log(err);
+			topic.publish('iss/passTimes', err, target);
 		}
 	});
 });

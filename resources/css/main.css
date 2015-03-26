@@ -45,11 +45,10 @@ body, html {
 .geocoder {
 	display: block;
 	position: absolute;
-	top: 20px;
-	right: 65px;
+	top: 60px;
+	right: 20px;
 	z-index: 2;
 }
-
 
 /*button bar for iss tracking and d3 globe*/
 .issButtonBar {
@@ -191,14 +190,23 @@ background-color: #ddd;
 }
 
 /* esri popup window overrides */
-/*.esriPopup .sizer {
-	width: 375px;
-}*/
 .esriPopup .esriPopupWrapper {
 	background-color: #FFFFFF;
 }
 .esriPopup .titlePane {
-	background-color: rgb(51, 102, 153);
+	background-color: #0074D9;
+}
+.esriPopupMobile .titlePane {
+	background-color: #0074D9;
+}
+.esriMobileNavigationBar {
+	background-color: #0074D9;
+	background-image: none;
+}
+.esriMobilePopupInfoView {
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 /* dbootstrap overrides*/
