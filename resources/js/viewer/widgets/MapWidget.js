@@ -12,6 +12,7 @@ define([
 	'dojo/text!./MapWidget/templates/MapWidget.html',
 	'dojo/topic',
 
+	'esri/config',
 	'esri/dijit/Geocoder',
 	'esri/dijit/LocateButton',
 	'esri/graphic',
@@ -25,7 +26,7 @@ define([
 	Globe, ISSTracker,
 	_TemplatedMixin, _WidgetBase,
 	declare, lang, locale, has, template, topic,
-	Geocoder, LocateButton, Graphic, InfoTemplate, Map,
+	esriConfig, Geocoder, LocateButton, Graphic, InfoTemplate, Map,
 	require,
 	put
 ) {
@@ -46,6 +47,11 @@ define([
 			}
 		},
 		_initMap: function(isMobile) {
+			esriConfig.defaults.map.panDuration = 200; // time in milliseconds, default panDuration: 350
+			esriConfig.defaults.map.panRate = 1; // default panRate: 25
+			esriConfig.defaults.map.zoomDuration = 200; // default zoomDuration: 500
+			esriConfig.defaults.map.zoomRate = 1; // default zoomRate: 25
+
 			this.map = new Map(this.mapNode, this.config.mapOptions);
 			this.map.on('load', lang.hitch(this, '_initMapWidgets', isMobile));
 		},

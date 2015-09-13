@@ -12,7 +12,7 @@ define([
 	'dojo/text!./ISSTracker/templates/ISSTracker.html',
 	'dojo/topic',
 
-	'esri/geometry/Circle',
+	'esri/geometry/geometryEngineAsync',
 	'esri/geometry/Point',
 	'esri/geometry/webMercatorUtils',
 	'esri/graphic',
@@ -29,7 +29,7 @@ define([
 ], function(
 	_TemplatedMixin, _WidgetBase, _WidgetsInTemplateMixin,
 	array, declare, lang, on, dojoRequest, script, template, topic,
-	Circle, Point, webMercatorUtils, Graphic, InfoTemplate, FeatureLayer, GraphicsLayer, SimpleRenderer, PictureMarkerSymbol, SimpleMarkerSymbol,
+	geometryEngineAsync, Point, webMercatorUtils, Graphic, InfoTemplate, FeatureLayer, GraphicsLayer, SimpleRenderer, PictureMarkerSymbol, SimpleMarkerSymbol,
 	put,
 	css
 ) {
@@ -106,7 +106,7 @@ define([
 				id: layerConfig.id,
 				outFields: layerConfig.outFields,
 				infoTemplate: infoTemplate,
-				mode: FeatureLayer.MODE_ONDEMAND
+				mode: FeatureLayer.MODE_SNAPSHOT
 			});
 
 			var symbol = new SimpleMarkerSymbol(this.config.symbolDefinitions.astroPhoto);
@@ -137,7 +137,7 @@ define([
 			clearInterval(this.intervalID);
 		},
 		_findISS: function(centerAndZoom) {
-			script.get('http://api.open-notify.org/iss-now.json', {
+			script.get(this.config.openNotify.issNowUrl, {
 				jsonp: 'callback'
 			}).then(lang.hitch(this, '_findISSSuccess', centerAndZoom), lang.hitch(this, '_findISSErr'));
 		},
@@ -177,29 +177,26 @@ define([
 
 
 		_findNearbyPhotos: function(mapPoint) {
-			var circleGeom = new Circle(mapPoint, {
-				geodesic: true,
-				radius: 50000, // meters
-			});
-
-			var circleGeomJson = circleGeom.toJson();
-
-			var request = dojoRequest(this.astroPhotosLayer.url + '/query', {
-				data: {
-					f: 'json',
-					returnIdsOnly: true,
-					geometryType: 'esriGeometryPolygon',
-					geometry: JSON.stringify(circleGeomJson),
-					outSR: 102100
-				},
-				handleAs: 'json',
-				headers: {
-					'X-Requested-With': null
-				},
-				method: 'POST',
-				preventCache: true
-			});
-			request.then(lang.hitch(this, '_findNearbyPhotosComplete'), lang.hitch(this, '_findNearbyPhotosErr'));
+			geometryEngineAsync.geodesicBuffer(mapPoint, 50, 'kilometers', false)
+				.then(lang.hitch(this, function(geomEngineResponse) {
+					var bufferJson = geomEngineResponse.toJson();
+					var request = dojoRequest(this.astroPhotosLayer.url + '/query', {
+						data: {
+							f: 'json',
+							returnIdsOnly: true,
+							geometryType: 'esriGeometryPolygon',
+							geometry: JSON.stringify(bufferJson),
+							outSR: 102100
+						},
+						handleAs: 'json',
+						headers: {
+							'X-Requested-With': null
+						},
+						method: 'POST',
+						preventCache: true
+					});
+					request.then(lang.hitch(this, '_findNearbyPhotosComplete'), lang.hitch(this, '_findNearbyPhotosErr'));
+				}));
 		},
 		_findNearbyPhotosComplete: function(res) {
 			if (this.issWakeCounter === this.issWakeLength) {
@@ -228,7 +225,7 @@ define([
 			// target: 'locateButton' || 'geocoder'
 			var lngLatGeom = webMercatorUtils.webMercatorToGeographic(graphic.geometry);
 			var issPassTimeReturnObj;
-			script.get('http://api.open-notify.org/iss-pass.json', {
+			script.get(this.config.openNotify.issPassUrl, {
 				jsonp: 'callback',
 				query: {
 					lat: lngLatGeom.y,

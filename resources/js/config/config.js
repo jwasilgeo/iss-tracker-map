@@ -15,6 +15,10 @@ define([], function() {
 				outFields: ['missionRollFrame', 'mission', 'roll', 'frame']
 			}
 		},
+		openNotify: {
+			issNowUrl: 'http://api.open-notify.org/iss-now.json',
+			issPassUrl: 'http://api.open-notify.org/iss-pass.json'
+		},
 		symbolDefinitions: {
 			iss: {
 				angle: 0,
