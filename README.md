@@ -3,14 +3,14 @@ iss-tracker-map
 
 Use this web map to find out where the International Space Station (ISS) is and view nearby astronaut photography.
 
-[Ok, let me see it already](http://jwasil.github.io/iss-tracker-map/).
+[Ok, let me see it already](http://jwasilgeo.github.io/iss-tracker-map/).
 
 ### Features:
 * Track the space station's current location
 * Explore its orbit on a 3D globe without any of that funky projection warping. Ooooo, ahhhh.
-![globe](https://github.com/jwasil/iss-tracker-map/blob/readme_docs/docs/globe1.JPG)
+![globe](https://github.com/jwasilgeo/iss-tracker-map/blob/readme_docs/docs/globe1.JPG)
 * Discover super cool astronaut photos taken over the past few years
-![astroPhoto](https://github.com/jwasil/iss-tracker-map/blob/readme_docs/docs/astroPhoto1.JPG)
+![astroPhoto](https://github.com/jwasilgeo/iss-tracker-map/blob/readme_docs/docs/astroPhoto1.JPG)
 * Find out when the ISS will be overhead
 
 ### Shout-outs:
