@@ -10,14 +10,14 @@ define([], function() {
 		},
 		layerResources: {
 			astroPhotos: {
-				url: 'https://services2.arcgis.com/gLefH1ihsr75gzHY/arcgis/rest/services/ISSPhotoLocations_20_34/FeatureServer/0',
+				url: '//services2.arcgis.com/gLefH1ihsr75gzHY/arcgis/rest/services/ISSPhotoLocations_20_34/FeatureServer/0',
 				id: 'astroPhotosLayer',
 				outFields: ['missionRollFrame', 'mission', 'roll', 'frame']
 			}
 		},
 		openNotify: {
-			issNowUrl: 'https://api.open-notify.org/iss-now.json',
-			issPassUrl: 'https://api.open-notify.org/iss-pass.json'
+			issNowUrl: 'http://api.open-notify.org/iss-now.json',
+			issPassUrl: 'http://api.open-notify.org/iss-pass.json'
 		},
 		symbolDefinitions: {
 			iss: {
